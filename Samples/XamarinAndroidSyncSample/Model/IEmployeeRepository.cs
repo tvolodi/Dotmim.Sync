@@ -12,7 +12,11 @@ using Android.Widget;
 
 namespace XamarinAndroidSyncSample.Model
 {
-    interface IEmployeeRepository
+    public interface IEmployeeRepository
     {
+        void SaveEmployee(Employee employee);
+        void DeleteEmployee(Guid employeeId);
+        Employee GetEmployee(Guid employeeId);
+        IEnumerable<Employee> GetEmployees();
     }
 }

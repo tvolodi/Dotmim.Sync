@@ -17,7 +17,7 @@ namespace XamarinAndroidSyncSample.Model
         public Guid EmployeeId { get; set; }
         public String FirstName { get; set; }
         public String LastName { get; set; }
-        public Byte[] ProfilePicture { get; set; }
+        //public Byte[] ProfilePicture { get; set; }
         public String PhoneNumber { get; set; }
         public DateTime HireDate { get; set; }
         public String Comments { get; set; }
