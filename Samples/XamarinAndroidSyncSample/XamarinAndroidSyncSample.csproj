@@ -50,9 +50,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
@@ -61,6 +61,7 @@
     <Compile Include="Model\IEmployeeRepository.cs" />
     <Compile Include="Model\SqLiteBaseRepository.cs" />
     <Compile Include="Model\SqlLiteEmployeeRepository.cs" />
+    <Compile Include="Model\SyncHelper.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -119,7 +120,26 @@
     <PackageReference Include="System.Data.SQLite">
       <Version>1.0.108</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Android.Support.Design" Version="27.0.2" />
+    <PackageReference Include="Xamarin.Android.Support.Design">
+      <Version>27.0.2.1</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Android.Support.v7.AppCompat">
+      <Version>27.0.2.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Projects\Dotmim.Sync.Core\Dotmim.Sync.Core.csproj">
+      <Project>{c58c0e87-84b4-4dc7-a2f2-ccc2b9daef86}</Project>
+      <Name>Dotmim.Sync.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Projects\Dotmim.Sync.Sqlite\Dotmim.Sync.Sqlite.csproj">
+      <Project>{92259fc7-577b-4328-a336-3b0fd5e265e1}</Project>
+      <Name>Dotmim.Sync.Sqlite</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Projects\Dotmim.Sync.Web.Client\Dotmim.Sync.Web.Client.csproj">
+      <Project>{270D05BA-80DB-4C45-A19B-75309EB6B839}</Project>
+      <Name>Dotmim.Sync.Web.Client</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
