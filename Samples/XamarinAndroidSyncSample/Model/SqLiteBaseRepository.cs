@@ -25,5 +25,7 @@ namespace XamarinAndroidSyncSample.Model
            
             return new SqliteConnection("Data Source=" + DbFile);
         }
+           
+
     }
 }

@@ -104,6 +104,9 @@
     <PackageReference Include="Dapper">
       <Version>1.50.5</Version>
     </PackageReference>
+    <PackageReference Include="Dapper.Contrib">
+      <Version>1.50.5</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.Data.Sqlite">
       <Version>2.1.0</Version>
     </PackageReference>

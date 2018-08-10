@@ -15,7 +15,7 @@ namespace XamarinAndroidSyncSample.Model
     public interface IEmployeeRepository
     {
         void SaveEmployee(Employee employee);
-        void DeleteEmployee(Guid employeeId);
+        int DeleteEmployee(Guid employeeId);
         Employee GetEmployee(Guid employeeId);
         IEnumerable<Employee> GetEmployees();
     }
