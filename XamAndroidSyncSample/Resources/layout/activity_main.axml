@@ -27,6 +27,13 @@
             android:id="@+id/scrollView1" />
     </Toolbar>-->
 	<Button
+		android:text="Add Employees"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/addEmployeesButton"
+		android:onClick="AddEmployees"
+	/>
+	<Button
 		android:text="Sync"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"

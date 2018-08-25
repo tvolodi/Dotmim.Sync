@@ -24,6 +24,26 @@ namespace XamAndroidSyncSample.DataServices
             this.employeeRepository = employeeRepository;
         }
 
+        public int AddEmployees()
+        {
+            int result = 0;
+            for(int i = 0; i <= 4; i++)
+            {
+                Employee employee = new Employee
+                {
+                    FirstName = $"FirstName {i}",
+                    HireDate = DateTime.Now,
+                    LastName = $"LastName {i}",
+                    PhoneNumber = $"{i}{i}{i}-{i}{i}-{i}{i}",
+                    Comments = $"Test add employee cycle {i}"
+                };
+                employeeRepository.SaveEmployee(employee);
+                result++;
+            }
+
+            return result;
+        }
+
         public List<EmployeeDtoOutput> GetAll()
         {
             var mapConfig = new MapperConfiguration(cfg =>

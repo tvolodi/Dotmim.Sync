@@ -26,7 +26,7 @@ namespace XamAndroidSyncSample.DataServices
         public static void InitContainer()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterType<IEmployeeRepository>().As<IEmployeeRepository>();
+            builder.RegisterType<EmployeeRepository>().As<IEmployeeRepository>();
             builder.RegisterType<EmployeeService>().As<IEmployeeService>();
             Container = builder.Build();
 

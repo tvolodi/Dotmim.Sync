@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using XamAndroidSyncSample.DataServices;
 using Autofac;
 using System.Linq;
+using System;
 
 namespace XamAndroidSyncSample
 {
@@ -21,21 +22,40 @@ namespace XamAndroidSyncSample
 
             ListView syncDataListView = FindViewById<ListView>(Resource.Id.syncDataListView);
 
-            List<EmployeeDtoOutput> employees;
+            List<EmployeeDtoOutput> employees = new List<EmployeeDtoOutput>();
 
             string[] syncDataArray; // new string[] { "test", "test2" };
             using (var scope = ServicesContainer.Container.BeginLifetimeScope())
             {
-                var employeeService = scope.Resolve<IEmployeeService>();
-                employees = employeeService.GetAll();
+                try
+                {
+                    var employeeService = scope.Resolve<IEmployeeService>();
+                    employees = employeeService.GetAll();
+                } catch (Exception e)
+                {
+                    string msg = e.ToString();
+                }
+                    
+                
             }
 
             syncDataArray = employees.Select(dto => dto.EmployeeId.ToString()).ToArray();
-                ArrayAdapter<string> syncDataAdapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, syncDataArray);
+            ArrayAdapter<string> syncDataAdapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, syncDataArray);
             // ListAdapter = new ArrayAdapter<string>(this, Resource.Id.list_item, syncDataArray);
             syncDataListView.Adapter = syncDataAdapter;
 
             //GridView gridView = (GridView)FindViewById(Resource.Id.syncGridView);
+
+            Button addEmployeeButton = FindViewById<Button>(Resource.Id.addEmployeesButton);
+            addEmployeeButton.Click += (o, e) =>
+            {
+                using (var scope = ServicesContainer.Container.BeginLifetimeScope())
+                {
+                    var employeeService = scope.Resolve<IEmployeeService>();
+                    int addedRecQnt = employeeService.AddEmployees();
+                    Toast.MakeText(this, addedRecQnt.ToString(), ToastLength.Short);
+                }
+            };
 
         }
     }

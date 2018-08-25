@@ -15,16 +15,17 @@ namespace XamAndroidSyncSample.DataServices
     public interface IEmployeeService
     {
         List<EmployeeDtoOutput> GetAll();
+        int AddEmployees();
     }
 
     public class EmployeeDtoOutput
     {
-        public Guid EmployeeId { get; set; }
-        public String FirstName { get; set; }
-        public String LastName { get; set; }
+        public int EmployeeId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         //public Byte[] ProfilePicture { get; set; }
-        public String PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         public DateTime HireDate { get; set; }
-        public String Comments { get; set; }
+        public string Comments { get; set; }
     }
 }

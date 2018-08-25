@@ -15,8 +15,8 @@ namespace XamAndroidSyncSample.Model
     public interface IEmployeeRepository
     {
         void SaveEmployee(Employee employee);
-        int DeleteEmployee(Guid employeeId);
-        Employee GetEmployee(Guid employeeId);
+        int DeleteEmployee(int employeeId);
+        Employee GetEmployee(int employeeId);
         IEnumerable<Employee> GetEmployees();
     }
 }

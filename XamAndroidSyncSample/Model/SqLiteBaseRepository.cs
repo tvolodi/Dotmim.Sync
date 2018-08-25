@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
+﻿using System.IO;
 using Microsoft.Data.Sqlite;
 
 namespace XamAndroidSyncSample.Model
@@ -17,12 +7,14 @@ namespace XamAndroidSyncSample.Model
     {
         public static string DbFile
         {
-            get { return Android.OS.Environment.ExternalStorageDirectory + "\\SimpleDb.sqlite"; }
+            get
+            {
+                return Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "database.db3");
+            }
         }
 
         public static SqliteConnection SimpleDbConnection()
-        {
-
+        {            
             return new SqliteConnection("Data Source=" + DbFile);
         }
     }
