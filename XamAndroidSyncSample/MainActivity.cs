@@ -17,6 +17,7 @@ namespace XamAndroidSyncSample
             SetContentView(Resource.Layout.activity_main);
 
             ListView syncDataListView = FindViewById<ListView>(Resource.Id.syncDataListView);
+
             string[] syncDataArray = new string[] { "test", "test2" };
             ArrayAdapter<string> syncDataAdapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, syncDataArray);
             // ListAdapter = new ArrayAdapter<string>(this, Resource.Id.list_item, syncDataArray);

@@ -44,7 +44,7 @@ namespace XamAndroidSyncSample.Model
                 }
             }
 
-            int IEmployeeRepository.DeleteEmployee(Guid employeeId)
+            public int DeleteEmployee(Guid employeeId)
             {
                 int result = 0;
                 string sqlQueryText = @"DELETE FROM Employee WHERE EmployeeId = @employeeId";
@@ -67,7 +67,7 @@ namespace XamAndroidSyncSample.Model
                 return result;
             }
 
-            Employee IEmployeeRepository.GetEmployee(Guid employeeId)
+            public Employee GetEmployee(Guid employeeId)
             {
                 Employee employee = null;
 

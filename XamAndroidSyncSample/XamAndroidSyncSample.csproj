@@ -56,6 +56,9 @@
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataServices\ServicesContainer.cs" />
+    <Compile Include="DataServices\EmployeeService.cs" />
+    <Compile Include="DataServices\IEmployeeService.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\EmployeeRepository.cs" />
@@ -96,6 +99,12 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher_round.png" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Autofac">
+      <Version>4.8.1</Version>
+    </PackageReference>
+    <PackageReference Include="AutoMapper">
+      <Version>7.0.1</Version>
+    </PackageReference>
     <PackageReference Include="Dapper">
       <Version>1.50.5</Version>
     </PackageReference>
