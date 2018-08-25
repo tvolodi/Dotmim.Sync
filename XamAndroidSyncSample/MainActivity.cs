@@ -3,6 +3,9 @@ using Android.Widget;
 using Android.OS;
 using Android.Support.V7.App;
 using System.Collections.Generic;
+using XamAndroidSyncSample.DataServices;
+using Autofac;
+using System.Linq;
 
 namespace XamAndroidSyncSample
 {
@@ -18,8 +21,17 @@ namespace XamAndroidSyncSample
 
             ListView syncDataListView = FindViewById<ListView>(Resource.Id.syncDataListView);
 
-            string[] syncDataArray = new string[] { "test", "test2" };
-            ArrayAdapter<string> syncDataAdapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, syncDataArray);
+            List<EmployeeDtoOutput> employees;
+
+            string[] syncDataArray; // new string[] { "test", "test2" };
+            using (var scope = ServicesContainer.Container.BeginLifetimeScope())
+            {
+                var employeeService = scope.Resolve<IEmployeeService>();
+                employees = employeeService.GetAll();
+            }
+
+            syncDataArray = employees.Select(dto => dto.EmployeeId.ToString()).ToArray();
+                ArrayAdapter<string> syncDataAdapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, syncDataArray);
             // ListAdapter = new ArrayAdapter<string>(this, Resource.Id.list_item, syncDataArray);
             syncDataListView.Adapter = syncDataAdapter;
 

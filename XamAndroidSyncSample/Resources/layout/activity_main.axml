@@ -26,6 +26,11 @@
             android:layout_height="wrap_content"
             android:id="@+id/scrollView1" />
     </Toolbar>-->
+	<Button
+		android:text="Sync"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/syncButton" />
     <ListView
         android:minWidth="25px"
         android:minHeight="25px"
