@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -44,18 +44,24 @@ namespace XamAndroidSyncSample.DataServices
             return result;
         }
 
-        public List<EmployeeDtoOutput> GetAll()
+        public async Task<List<EmployeeDtoOutput>> GetAllAsync()
         {
-            var mapConfig = new MapperConfiguration(cfg =>
+            return await Task.Run(async () =>
             {
-                cfg.CreateMap<Employee, EmployeeDtoOutput>();
+                var mapConfig = new MapperConfiguration(cfg =>
+                {
+                    cfg.CreateMap<Employee, EmployeeDtoOutput>();
+                });
+
+                IMapper mapper = mapConfig.CreateMapper();
+
+                List<Employee> employees = await employeeRepository.GetEmployeesAsync();
+
+                List<EmployeeDtoOutput> employeesDtoOutput = employees.Select(employee => mapper.Map<Employee, EmployeeDtoOutput>(employee)).ToList();
+
+                return employeesDtoOutput;
+
             });
-
-            IMapper mapper = mapConfig.CreateMapper();
-
-            List<EmployeeDtoOutput> employeesDtoOutput = employeeRepository.GetEmployees().Select(employee => mapper.Map<Employee, EmployeeDtoOutput>(employee)).ToList();
-
-            return employeesDtoOutput;
 
         }
     }

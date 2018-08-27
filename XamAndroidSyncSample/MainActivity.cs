@@ -7,13 +7,16 @@ using XamAndroidSyncSample.DataServices;
 using Autofac;
 using System.Linq;
 using System;
+using System.Collections;
 
 namespace XamAndroidSyncSample
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
     public class MainActivity : AppCompatActivity 
     {
-        protected override void OnCreate(Bundle savedInstanceState)
+        private ArrayAdapter<string> syncDataAdapter;
+
+        protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
@@ -24,23 +27,22 @@ namespace XamAndroidSyncSample
 
             List<EmployeeDtoOutput> employees = new List<EmployeeDtoOutput>();
 
+            List<string> arrayList = new List<string>();
             string[] syncDataArray; // new string[] { "test", "test2" };
             using (var scope = ServicesContainer.Container.BeginLifetimeScope())
             {
                 try
                 {
                     var employeeService = scope.Resolve<IEmployeeService>();
-                    employees = employeeService.GetAll();
+                    employees = await employeeService.GetAllAsync();
                 } catch (Exception e)
                 {
                     string msg = e.ToString();
                 }
-                    
-                
             }
 
-            syncDataArray = employees.Select(dto => dto.EmployeeId.ToString()).ToArray();
-            ArrayAdapter<string> syncDataAdapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, syncDataArray);
+            // syncDataArray = employees.Select(dto => dto.EmployeeId.ToString()).ToArray();
+            syncDataAdapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, arrayList);
             // ListAdapter = new ArrayAdapter<string>(this, Resource.Id.list_item, syncDataArray);
             syncDataListView.Adapter = syncDataAdapter;
 
@@ -53,9 +55,43 @@ namespace XamAndroidSyncSample
                 {
                     var employeeService = scope.Resolve<IEmployeeService>();
                     int addedRecQnt = employeeService.AddEmployees();
-                    Toast.MakeText(this, addedRecQnt.ToString(), ToastLength.Short);
+                    if(addedRecQnt > 0)
+                    {
+                        syncDataAdapter.Clear();
+                        //    List<EmployeeDtoOutput> employeeDtoOutputs = await employeeService.GetAllAsync();
+
+                        //    syncDataAdapter.AddAll(employeeDtoOutputs.Select(employeeDTO => employeeDTO.EmployeeId.ToString()).ToList());
+                        //
+                    }
+                    
+                    
+
+                    Toast.MakeText(this, addedRecQnt.ToString(), ToastLength.Short).Show();
                 }
             };
+
+
+            Button refreshLocalButton = FindViewById<Button>(Resource.Id.refreshLocalButton);
+            refreshLocalButton.Click += (o, e) =>
+            {
+                using (var scope = ServicesContainer.Container.BeginLifetimeScope())
+                {
+                    var employeeService = scope.Resolve<IEmployeeService>();
+                    int addedRecQnt = employeeService.AddEmployees();
+                    if (addedRecQnt > 0)
+                    {
+                        syncDataAdapter.Clear();
+                        //    List<EmployeeDtoOutput> employeeDtoOutputs = await employeeService.GetAllAsync();
+
+                        //    syncDataAdapter.AddAll(employeeDtoOutputs.Select(employeeDTO => employeeDTO.EmployeeId.ToString()).ToList());
+                        //
+                    }
+
+                    Toast.MakeText(this, addedRecQnt.ToString(), ToastLength.Short).Show();
+                }
+            };
+
+
 
         }
     }

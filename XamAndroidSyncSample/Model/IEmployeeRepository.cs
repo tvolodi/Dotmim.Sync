@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -17,6 +17,6 @@ namespace XamAndroidSyncSample.Model
         void SaveEmployee(Employee employee);
         int DeleteEmployee(int employeeId);
         Employee GetEmployee(int employeeId);
-        IEnumerable<Employee> GetEmployees();
+        Task<List<Employee>> GetEmployeesAsync();
     }
 }

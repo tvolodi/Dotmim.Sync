@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -14,7 +14,7 @@ namespace XamAndroidSyncSample.DataServices
 {
     public interface IEmployeeService
     {
-        List<EmployeeDtoOutput> GetAll();
+        Task<List<EmployeeDtoOutput>> GetAllAsync();
         int AddEmployees();
     }
 

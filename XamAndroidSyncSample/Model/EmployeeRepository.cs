@@ -11,7 +11,7 @@ using Android.Views;
 using Android.Widget;
 using Microsoft.Data.Sqlite;
 using Dapper;
-
+using System.Threading.Tasks;
 
 namespace XamAndroidSyncSample.Model
 {
@@ -28,8 +28,8 @@ namespace XamAndroidSyncSample.Model
             {
                 conn.Open();
 
-                string sqlDeleteTable = @"DROP TABLE Employee";
-                conn.Execute(sqlDeleteTable);
+                //string sqlDeleteTable = @"DROP TABLE Employee";
+                //conn.Execute(sqlDeleteTable);
 
                 string sqlQueryText = @"CREATE TABLE IF NOT EXISTS Employee
                                     (                  
@@ -102,25 +102,25 @@ namespace XamAndroidSyncSample.Model
             return employee;
         }
 
-        public IEnumerable<Employee> GetEmployees()
+        public async Task<List<Employee>> GetEmployeesAsync()
         {
-            List<Employee> employees = new List<Employee>();
-            try
-            {
-                conn.Open();
-                string sqlQueryText = @"SELECT EmployeeId, FirstName, LastName, PhoneNumber, HireDate, Comments
-                                    FROM Employee";
-                employees = conn.Query<Employee>(sqlQueryText).ToList();
-            }
-            catch (Exception e)
-            {
 
-            }
-            finally
+            return await Task.Run(() =>
             {
-                conn.Close();
-            }
-            return employees;
+                List<Employee> employees = null; // = new List<Employee>();
+                try
+                {
+                    conn.OpenAsync();
+                    string sqlQueryText = @"SELECT EmployeeId, FirstName, LastName, PhoneNumber, HireDate, Comments
+                                    FROM Employee";
+                    employees = conn.Query<Employee>(sqlQueryText).ToList();
+                }
+                finally
+                {
+                    conn.Close();
+                }
+                return employees;
+            });
         }
 
         public void SaveEmployee(Employee employee)
@@ -142,5 +142,6 @@ namespace XamAndroidSyncSample.Model
             }
 
         }
+
     }
 }
