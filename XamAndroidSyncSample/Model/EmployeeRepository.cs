@@ -20,9 +20,9 @@ namespace XamAndroidSyncSample.Model
 
         private SqliteConnection conn = null;
 
-        public EmployeeRepository()
+        public EmployeeRepository(SqliteConnection sqliteConnection)
         {
-            conn = SqLiteBaseRepository.SimpleDbConnection();
+            conn = sqliteConnection; // SqLiteBaseRepository.SimpleDbConnection();
 
             try
             {

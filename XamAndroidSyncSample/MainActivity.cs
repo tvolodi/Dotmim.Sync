@@ -41,7 +41,7 @@ namespace XamAndroidSyncSample
                 }
             }
 
-            // syncDataArray = employees.Select(dto => dto.EmployeeId.ToString()).ToArray();
+            arrayList = employees.Select(dto => dto.EmployeeId.ToString()).ToList();
             syncDataAdapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, arrayList);
             // ListAdapter = new ArrayAdapter<string>(this, Resource.Id.list_item, syncDataArray);
             syncDataListView.Adapter = syncDataAdapter;
@@ -72,22 +72,18 @@ namespace XamAndroidSyncSample
 
 
             Button refreshLocalButton = FindViewById<Button>(Resource.Id.refreshLocalButton);
-            refreshLocalButton.Click += (o, e) =>
+            refreshLocalButton.Click += async (o, e) =>
             {
                 using (var scope = ServicesContainer.Container.BeginLifetimeScope())
                 {
                     var employeeService = scope.Resolve<IEmployeeService>();
-                    int addedRecQnt = employeeService.AddEmployees();
-                    if (addedRecQnt > 0)
-                    {
-                        syncDataAdapter.Clear();
-                        //    List<EmployeeDtoOutput> employeeDtoOutputs = await employeeService.GetAllAsync();
+                    syncDataAdapter.Clear();
 
-                        //    syncDataAdapter.AddAll(employeeDtoOutputs.Select(employeeDTO => employeeDTO.EmployeeId.ToString()).ToList());
-                        //
-                    }
+                    List<EmployeeDtoOutput> employeeDtoOutputs = await employeeService.GetAllAsync();
 
-                    Toast.MakeText(this, addedRecQnt.ToString(), ToastLength.Short).Show();
+                    syncDataAdapter.AddAll(employeeDtoOutputs.Select(employeeDTO => employeeDTO.EmployeeId.ToString()).ToList());
+
+                    Toast.MakeText(this, "Refreshed", ToastLength.Long).Show();
                 }
             };
 

@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Autofac;
+using Microsoft.Data.Sqlite;
 using XamAndroidSyncSample.Model;
 
 namespace XamAndroidSyncSample.DataServices
@@ -26,8 +27,13 @@ namespace XamAndroidSyncSample.DataServices
         public static void InitContainer()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterType<EmployeeRepository>().As<IEmployeeRepository>();
+            
+            // Register Employee repository with SqliteConnection as parameter
+            builder.Register(c => new EmployeeRepository(SqLiteBaseRepository.SimpleDbConnection())).As<IEmployeeRepository>();
+
+//            builder.RegisterType<EmployeeRepository>().As<IEmployeeRepository>().WithParameter;
             builder.RegisterType<EmployeeService>().As<IEmployeeService>();
+            // builder.RegisterType<SqliteConnection>().WithParameter(new TypedParameter(typeof(string), SqLiteBaseRepository.SimpleDbConnection.));
             Container = builder.Build();
 
         }
