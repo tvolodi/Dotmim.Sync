@@ -31,9 +31,8 @@ namespace XamAndroidSyncSample.DataServices
             // Register Employee repository with SqliteConnection as parameter
             builder.Register(c => new EmployeeRepository(SqLiteBaseRepository.SimpleDbConnection())).As<IEmployeeRepository>();
 
-//            builder.RegisterType<EmployeeRepository>().As<IEmployeeRepository>().WithParameter;
             builder.RegisterType<EmployeeService>().As<IEmployeeService>();
-            // builder.RegisterType<SqliteConnection>().WithParameter(new TypedParameter(typeof(string), SqLiteBaseRepository.SimpleDbConnection.));
+
             Container = builder.Build();
 
         }
