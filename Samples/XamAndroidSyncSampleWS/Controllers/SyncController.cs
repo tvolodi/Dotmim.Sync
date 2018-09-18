@@ -31,7 +31,14 @@ namespace XamAndroidSyncSampleWS.Controllers
         [HttpPost]
         public async Task Post()
         {
-            await webProxyServer.HandleRequestAsync(this.HttpContext);
+            try
+            {
+                await webProxyServer.HandleRequestAsync(this.HttpContext);
+            } catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+            
         }
     }
 }
